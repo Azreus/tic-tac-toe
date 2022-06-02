@@ -7,9 +7,20 @@ const gameBoard = (() => {
     _gameboard[index] = mark;
   }
 
-  return { getGameBoard,
-          updateGameBoard };
+  return {
+    getGameBoard,
+    updateGameBoard
+  };
 })();
+
+const Player = (mark) => {
+  const getMark = () => { return mark; };
+
+  return {
+    mark,
+    getMark
+  };
+};
 
 const displayController = (() => {
   const squares = document.querySelectorAll('.square');
@@ -23,9 +34,30 @@ const displayController = (() => {
   };
 
   const addMark = (square, index) => {
-    square.textContent = 'x';
-    gameBoard.updateGameBoard(index, 'x');
+    switchPlayer(currentPlayer);
+    square.textContent = currentPlayer.getMark();
+    gameBoard.updateGameBoard(index, currentPlayer.getMark());
   }
+
+  const switchPlayer = (player) => {
+    if (player.getMark() === 'x') {
+      if (player1.getMark() === 'x') {
+        currentPlayer = player2;
+      } else {
+        currentPlayer = player1;
+      }
+    } else if (player.getMark() === 'o') {
+      if (player1.getMark() === 'o') {
+        currentPlayer = player2;
+      } else {
+        currentPlayer = player1;
+      }
+    }
+  };
+
+  let player1 = Player('x');
+  let player2 = Player('o');
+  let currentPlayer = player1;
 
   squares.forEach(square => {
     let index = square.getAttribute('data-index');
@@ -36,7 +68,3 @@ const displayController = (() => {
 })();
 
 displayController.loadGameBoard();
-
-const player = () => {
-  return {};
-};
