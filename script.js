@@ -7,15 +7,24 @@ const gameBoard = (() => {
 })();
 
 const displayController = (() => {
+  const squares = document.querySelectorAll('.square');
+  
   const loadGameBoard = () => {
-    const squares = document.querySelectorAll('.square');
     squares.forEach(square => {
       let index = square.getAttribute('data-index');
       let gameboard = gameBoard.getGameBoard();
       square.textContent = gameboard[index];
     });
   };
-  loadGameBoard();
+
+  const addMark = (square) => {
+    square.textContent = 'x';
+  }
+  
+  squares.forEach(square => {
+    square.addEventListener('click', () => { addMark(square); });
+  });
+
   return { loadGameBoard };
 })();
 
