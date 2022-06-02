@@ -1,9 +1,14 @@
 const gameBoard = (() => {
-  let _gameboard = ['x','o','x','o','o','x','x','o','x'];
+  let _gameboard = ['o','o','o','o','o','o','o','o','o'];
 
   const getGameBoard = () => { return _gameboard; };
 
-  return { getGameBoard };
+  const updateGameBoard = (index, mark) => {
+    _gameboard[index] = mark;
+  }
+
+  return { getGameBoard,
+          updateGameBoard };
 })();
 
 const displayController = (() => {
@@ -17,12 +22,14 @@ const displayController = (() => {
     });
   };
 
-  const addMark = (square) => {
+  const addMark = (square, index) => {
     square.textContent = 'x';
+    gameBoard.updateGameBoard(index, 'x');
   }
-  
+
   squares.forEach(square => {
-    square.addEventListener('click', () => { addMark(square); });
+    let index = square.getAttribute('data-index');
+    square.addEventListener('click', () => { addMark(square, index); });
   });
 
   return { loadGameBoard };
