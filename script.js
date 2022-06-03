@@ -34,14 +34,34 @@ const displayController = (() => {
   };
 
   const addMark = (square, index) => {
-    if (checkSpot(index)) {
-      switchPlayer(currentPlayer);
+    if (gameController.checkSpot(index)) {
+      let currentPlayer = gameController.getCurrentPlayer();
+      gameController.switchPlayer(currentPlayer);
       square.textContent = currentPlayer.getMark();
       gameBoard.updateGameBoard(index, currentPlayer.getMark());
     } else {
       return;
     }
   }
+
+  squares.forEach(square => {
+    let index = square.getAttribute('data-index');
+    square.addEventListener('click', () => { addMark(square, index); });
+  });
+
+  return {
+    loadGameBoard
+  };
+})();
+
+const gameController = (() => {
+  let player1 = Player('x');
+  let player2 = Player('o');
+  let currentPlayer = player1;
+
+  const getCurrentPlayer = () => {
+    return currentPlayer;
+  };
 
   const checkSpot = (index) => {
     let gameboard = gameBoard.getGameBoard();
@@ -68,16 +88,11 @@ const displayController = (() => {
     }
   };
 
-  let player1 = Player('x');
-  let player2 = Player('o');
-  let currentPlayer = player1;
-
-  squares.forEach(square => {
-    let index = square.getAttribute('data-index');
-    square.addEventListener('click', () => { addMark(square, index); });
-  });
-
-  return { loadGameBoard };
+  return {
+    checkSpot,
+    switchPlayer,
+    getCurrentPlayer
+  }
 })();
 
 displayController.loadGameBoard();
