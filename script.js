@@ -1,5 +1,5 @@
 const gameBoard = (() => {
-  let _gameboard = ['o','o','o','o','o','o','o','o','o'];
+  let _gameboard = new Array(9).fill('');
 
   const getGameBoard = () => { return _gameboard; };
 
@@ -34,10 +34,23 @@ const displayController = (() => {
   };
 
   const addMark = (square, index) => {
-    switchPlayer(currentPlayer);
-    square.textContent = currentPlayer.getMark();
-    gameBoard.updateGameBoard(index, currentPlayer.getMark());
+    if (checkSpot(index)) {
+      switchPlayer(currentPlayer);
+      square.textContent = currentPlayer.getMark();
+      gameBoard.updateGameBoard(index, currentPlayer.getMark());
+    } else {
+      return;
+    }
   }
+
+  const checkSpot = (index) => {
+    let gameboard = gameBoard.getGameBoard();
+    if (gameboard[index] === '') {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   const switchPlayer = (player) => {
     if (player.getMark() === 'x') {
