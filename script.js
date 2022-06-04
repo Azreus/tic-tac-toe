@@ -42,7 +42,9 @@ const displayController = (() => {
     } else {
       return;
     }
-    gameController.checkWin();
+    if (gameController.getTurn() >= 5) {
+      gameController.checkWin();
+    }
   }
 
   squares.forEach(square => {
@@ -58,13 +60,19 @@ const displayController = (() => {
 const gameController = (() => {
   let player1 = Player('x');
   let player2 = Player('o');
-  let currentPlayer = player1;
+  let _currentPlayer = player1;
+  let _turn = 0;
 
   const _winConditions = [
     [0, 1, 2], [3, 4, 5], [6, 7, 8],
     [0, 3, 6], [1, 4, 7], [2, 5, 8],
     [0, 4, 8], [2, 4, 6]
   ]
+
+  const _increaseTurns = () => {
+    _turn++;
+    return _turn;
+  }
 
   const checkWin = () => {
     const player1Mark = player1.getMark();
@@ -92,10 +100,17 @@ const gameController = (() => {
         continue;
       }
     }
+    if (getTurn() == 9) {
+      console.log("It's a tie");
+    }
   };
 
   const getCurrentPlayer = () => {
-    return currentPlayer;
+    return _currentPlayer;
+  };
+
+  const getTurn = () => {
+    return _turn;
   };
 
   const checkSpot = (index) => {
@@ -108,26 +123,28 @@ const gameController = (() => {
   };
 
   const switchPlayer = () => {
-    if (currentPlayer.getMark() === 'x') {
+    if (_currentPlayer.getMark() === 'x') {
       if (player1.getMark() === 'x') {
-        currentPlayer = player2;
+        _currentPlayer = player2;
       } else {
-        currentPlayer = player1;
+        _currentPlayer = player1;
       }
-    } else if (currentPlayer.getMark() === 'o') {
+    } else if (_currentPlayer.getMark() === 'o') {
       if (player1.getMark() === 'o') {
-        currentPlayer = player2;
+        _currentPlayer = player2;
       } else {
-        currentPlayer = player1;
+        _currentPlayer = player1;
       }
     }
+    _increaseTurns();
   };
 
   return {
     checkWin,
     checkSpot,
     switchPlayer,
-    getCurrentPlayer
+    getCurrentPlayer,
+    getTurn
   }
 })();
 
