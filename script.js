@@ -35,10 +35,10 @@ const displayController = (() => {
 
   const addMark = (square, index) => {
     if (gameController.checkSpot(index)) {
-      let currentPlayer = gameController.getCurrentPlayer();
-      gameController.switchPlayer(currentPlayer);
-      square.textContent = currentPlayer.getMark();
-      gameBoard.updateGameBoard(index, currentPlayer.getMark());
+      let currentPlayerMark = gameController.getCurrentPlayer().getMark();
+      gameController.switchPlayer();
+      square.textContent = currentPlayerMark;
+      gameBoard.updateGameBoard(index, currentPlayerMark);
     } else {
       return;
     }
@@ -107,14 +107,14 @@ const gameController = (() => {
     }
   };
 
-  const switchPlayer = (player) => {
-    if (player.getMark() === 'x') {
+  const switchPlayer = () => {
+    if (currentPlayer.getMark() === 'x') {
       if (player1.getMark() === 'x') {
         currentPlayer = player2;
       } else {
         currentPlayer = player1;
       }
-    } else if (player.getMark() === 'o') {
+    } else if (currentPlayer.getMark() === 'o') {
       if (player1.getMark() === 'o') {
         currentPlayer = player2;
       } else {
