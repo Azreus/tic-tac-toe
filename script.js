@@ -33,6 +33,13 @@ const displayController = (() => {
     });
   };
 
+  const addClickEvents = () => {
+    squares.forEach(square => {
+      let index = square.getAttribute('data-index');
+      square.addEventListener('click', () => { addMark(square, index); });
+    });
+  };
+
   const addMark = (square, index) => {
     if (gameController.checkSpot(index)) {
       let currentPlayerMark = gameController.getCurrentPlayer().getMark();
@@ -47,13 +54,9 @@ const displayController = (() => {
     }
   }
 
-  squares.forEach(square => {
-    let index = square.getAttribute('data-index');
-    square.addEventListener('click', () => { addMark(square, index); });
-  });
-
   return {
-    loadGameBoard
+    loadGameBoard,
+    addClickEvents
   };
 })();
 
@@ -72,6 +75,11 @@ const gameController = (() => {
   const _increaseTurns = () => {
     _turn++;
     return _turn;
+  }
+
+  const startGame = () => {
+    displayController.loadGameBoard();
+    displayController.addClickEvents();
   }
 
   const checkWin = () => {
@@ -144,6 +152,7 @@ const gameController = (() => {
   };
 
   return {
+    startGame,
     checkWin,
     checkSpot,
     switchPlayer,
@@ -152,4 +161,5 @@ const gameController = (() => {
   }
 })();
 
-displayController.loadGameBoard();
+const startButton = document.querySelector('.start-game');
+startButton.addEventListener('click', gameController.startGame);
