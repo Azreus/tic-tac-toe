@@ -36,9 +36,9 @@ const displayController = (() => {
   const addMark = (square, index) => {
     if (gameController.checkSpot(index)) {
       let currentPlayerMark = gameController.getCurrentPlayer().getMark();
-      gameController.switchPlayer();
       square.textContent = currentPlayerMark;
       gameBoard.updateGameBoard(index, currentPlayerMark);
+      gameController.switchPlayer();
     } else {
       return;
     }
@@ -81,6 +81,8 @@ const gameController = (() => {
     for (let i = 0; i < _winConditions.length; i++) {
       let player1Count = 0;
       let player2Count = 0;
+      // Loops through each win condition and compares each value to the indexes
+      // on the gameboard, checking for which mark is placed there
       for (let j = 0; j < _winConditions[i].length; j++) {
         if (player1Mark === gameboard[_winConditions[i][j]]) {
           player1Count++;
@@ -90,6 +92,7 @@ const gameController = (() => {
           console.log(player2);
         }
       }
+      // A playerCount of 3 means there was a win condition
       if (player1Count === 3) {
         console.log('congrats player 1');
         break;
@@ -100,6 +103,7 @@ const gameController = (() => {
         continue;
       }
     }
+    // The game ties after 9 rounds, when there are no spots left
     if (getTurn() == 9) {
       console.log("It's a tie");
     }

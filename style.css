@@ -1,12 +1,63 @@
+:root {
+  --border-side: 3px solid black;
+}
+
+body {
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .game-board {
   display: flex;
   flex-wrap: wrap;
-  width: 300px;
+  width: 450px;
 }
 
 .square {
-  border: 1px solid black;
+  font-family: 'Montserrat', sans-serif;
   box-sizing: border-box;
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
+  font-size: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.square:nth-child(1) {
+  border-right: var(--border-side);
+  border-bottom: var(--border-side);
+}
+
+.square:nth-child(2) {
+  border-bottom: var(--border-side);
+}
+
+.square:nth-child(3) {
+  border-left: var(--border-side);
+  border-bottom: var(--border-side);
+}
+
+.square:nth-child(4) {
+  border-right: var(--border-side);
+}
+
+.square:nth-child(6) {
+  border-left: var(--border-side);
+}
+
+.square:nth-child(7) {
+  border-top: var(--border-side);
+  border-right: var(--border-side);
+}
+
+.square:nth-child(8) {
+  border-top: var(--border-side);
+}
+
+.square:nth-child(9) {
+  border-top: var(--border-side);
+  border-left: var(--border-side);
 }
