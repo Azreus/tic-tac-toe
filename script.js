@@ -7,9 +7,14 @@ const gameBoard = (() => {
     _gameboard[index] = mark;
   }
 
+  const resetGameBoard = () => {
+    _gameboard = new Array(9).fill('');
+  }
+
   return {
     getGameBoard,
-    updateGameBoard
+    updateGameBoard,
+    resetGameBoard
   };
 })();
 
@@ -23,6 +28,7 @@ const Player = (mark) => {
 };
 
 const displayController = (() => {
+  const message = document.querySelector('.message')
   const squares = document.querySelectorAll('.square');
   
   const loadGameBoard = () => {
@@ -41,22 +47,54 @@ const displayController = (() => {
   };
 
   const addMark = (square, index) => {
-    if (gameController.checkSpot(index)) {
-      let currentPlayerMark = gameController.getCurrentPlayer().getMark();
-      square.textContent = currentPlayerMark;
-      gameBoard.updateGameBoard(index, currentPlayerMark);
-      gameController.switchPlayer();
+    if (!gameController.getGameOver()) {
+      if (gameController.checkSpot(index)) {
+        let currentPlayerMark = gameController.getCurrentPlayer().getMark();
+        square.textContent = currentPlayerMark;
+        gameBoard.updateGameBoard(index, currentPlayerMark);
+        gameController.switchPlayer();
+      } else {
+        return;
+      }
+      if (gameController.getTurn() >= 5) {
+        gameController.checkWin();
+      }
     } else {
       return;
     }
-    if (gameController.getTurn() >= 5) {
-      gameController.checkWin();
-    }
+  }
+
+  const displayMessage = (text) => {
+    message.textContent = text;
+  }
+
+  const hideStartButton = () => {
+    startButton.style.display = "none";
+  }
+
+  const showRestartButton = () => {
+    restartButton.style.display = "block";
+  }
+
+  const hideRestartButton = () => {
+    restartButton.style.display = "none";
+  }
+
+  const resetDisplay = () => {
+    squares.forEach(square => {
+      square.textContent = '';
+    });
+    message.textContent = 'Player 1 = X, Player 2 = O';
   }
 
   return {
     loadGameBoard,
-    addClickEvents
+    addClickEvents,
+    displayMessage,
+    hideStartButton,
+    showRestartButton,
+    hideRestartButton,
+    resetDisplay
   };
 })();
 
@@ -65,6 +103,7 @@ const gameController = (() => {
   let player2 = Player('o');
   let _currentPlayer = player1;
   let _turn = 0;
+  let _gameOver = false;
 
   const _winConditions = [
     [0, 1, 2], [3, 4, 5], [6, 7, 8],
@@ -80,6 +119,16 @@ const gameController = (() => {
   const startGame = () => {
     displayController.loadGameBoard();
     displayController.addClickEvents();
+    displayController.hideStartButton();
+  }
+
+  const restartGame = () => {
+    gameBoard.resetGameBoard();
+    displayController.resetDisplay();
+    displayController.hideRestartButton();
+    _currentPlayer = player1;
+    _turn = 0;
+    _gameOver = false;
   }
 
   const checkWin = () => {
@@ -94,18 +143,18 @@ const gameController = (() => {
       for (let j = 0; j < _winConditions[i].length; j++) {
         if (player1Mark === gameboard[_winConditions[i][j]]) {
           player1Count++;
-          console.log(player1);
         } else if (player2Mark === gameboard[_winConditions[i][j]]) {
           player2Count++;
-          console.log(player2);
         }
       }
       // A playerCount of 3 means there was a win condition
       if (player1Count === 3) {
-        console.log('congrats player 1');
+        displayController.displayMessage('Player 1 has won!');
+        _gameOver = true;
         break;
       } else if (player2Count === 3) {
-        console.log('congrats player 2');
+        displayController.displayMessage('Player 2 has won!');
+        _gameOver = true;
         break;
       } else {
         continue;
@@ -113,7 +162,11 @@ const gameController = (() => {
     }
     // The game ties after 9 rounds, when there are no spots left
     if (getTurn() == 9) {
-      console.log("It's a tie");
+      displayController.displayMessage('Game has tied!');
+      _gameOver = true;
+    }
+    if (_gameOver) {
+      displayController.showRestartButton();
     }
   };
 
@@ -124,6 +177,10 @@ const gameController = (() => {
   const getTurn = () => {
     return _turn;
   };
+
+  const getGameOver = () => {
+    return _gameOver;
+  }
 
   const checkSpot = (index) => {
     let gameboard = gameBoard.getGameBoard();
@@ -152,7 +209,9 @@ const gameController = (() => {
   };
 
   return {
+    getGameOver,
     startGame,
+    restartGame,
     checkWin,
     checkSpot,
     switchPlayer,
@@ -161,5 +220,8 @@ const gameController = (() => {
   }
 })();
 
-const startButton = document.querySelector('.start-game');
+const startButton = document.querySelector('#start-game');
+const restartButton = document.querySelector('#restart-game');
+
 startButton.addEventListener('click', gameController.startGame);
+restartButton.addEventListener('click', gameController.restartGame);

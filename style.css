@@ -1,19 +1,51 @@
 :root {
-  --border-side: 3px solid black;
+  --border-side: 5px solid rgb(99, 99, 99);
 }
 
 body {
-  margin-top: 100px;
+  background-color: rgb(197, 197, 197);
+  font-family: 'Roboto', sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+.title {
+  height: 100px;
+  font-size: 100px;
+  margin: 25px;
+}
+
+.message {
+  height: 40px;
+  font-size: 30px;
+  margin: 15px;
+}
+
+#start-game,
+#restart-game {
+  color: white;
+  padding: 10px 25px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#start-game {
+  background-color: rgb(81, 184, 72);
+}
+
+#restart-game {
+  background-color: rgb(140, 41, 206);
+}
+
 .game-board {
+  background-color: rgb(255, 255, 255);
   display: flex;
   flex-wrap: wrap;
   width: 450px;
+  padding: 15px;
+  border: 3px inset;
 }
 
 .square {
@@ -22,6 +54,7 @@ body {
   width: 150px;
   height: 150px;
   font-size: 100px;
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
