@@ -68,10 +68,6 @@ const displayController = (() => {
     message.textContent = text;
   }
 
-  const hideStartButton = () => {
-    startButton.style.display = "none";
-  }
-
   const showRestartButton = () => {
     restartButton.style.display = "block";
   }
@@ -84,14 +80,13 @@ const displayController = (() => {
     squares.forEach(square => {
       square.textContent = '';
     });
-    message.textContent = 'Player 1 = X, Player 2 = O';
+    message.textContent = 'Player 1 = X : Player 2 = O';
   }
 
   return {
     loadGameBoard,
     addClickEvents,
     displayMessage,
-    hideStartButton,
     showRestartButton,
     hideRestartButton,
     resetDisplay
@@ -119,7 +114,6 @@ const gameController = (() => {
   const startGame = () => {
     displayController.loadGameBoard();
     displayController.addClickEvents();
-    displayController.hideStartButton();
   }
 
   const restartGame = () => {
@@ -220,8 +214,6 @@ const gameController = (() => {
   }
 })();
 
-const startButton = document.querySelector('#start-game');
 const restartButton = document.querySelector('#restart-game');
-
-startButton.addEventListener('click', gameController.startGame);
 restartButton.addEventListener('click', gameController.restartGame);
+gameController.startGame();
