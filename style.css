@@ -3,18 +3,29 @@
 }
 
 body {
-  background-color: rgb(197, 197, 197);
+  /*background: repeating-linear-gradient(45deg, #a5a5a5, #a5a5a5 10px, #eeeeee 10px, #eeeeee 100px);*/
+  background-color: #eeeeee;
   font-family: 'Roboto', sans-serif;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  background: linear-gradient(#000000, #383838 95%);
+  color: #eeeeee;
+  font-family: 'Fredoka One', cursive;
+  font-size: 100px;
+  padding: 35px 0 25px;
+  text-align: center;
+}
+
+.main-screen {
+  padding-top: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.title {
-  height: 100px;
-  font-size: 100px;
-  margin: 25px;
 }
 
 .message {

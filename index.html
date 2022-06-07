@@ -5,25 +5,30 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
   <title>Tic-Tac-Toe</title>
 </head>
 <body>
   <div class="title">Tic Tac Toe</div>
-  <div class="game-board">
-    <div class="square" data-index="0"></div>
-    <div class="square" data-index="1"></div>
-    <div class="square" data-index="2"></div>
-    <div class="square" data-index="3"></div>
-    <div class="square" data-index="4"></div>
-    <div class="square" data-index="5"></div>
-    <div class="square" data-index="6"></div>
-    <div class="square" data-index="7"></div>
-    <div class="square" data-index="8"></div>
-  </div>
-  <div class="message">Player 1 = X, Player 2 = O</div>
-  <div class="info-display">
-    <button id="start-game">Start</button>
-    <button id="restart-game" style="display: none;">Restart</button>
+  <div class="main-screen">
+    <div class="game-board">
+      <div class="square" data-index="0"></div>
+      <div class="square" data-index="1"></div>
+      <div class="square" data-index="2"></div>
+      <div class="square" data-index="3"></div>
+      <div class="square" data-index="4"></div>
+      <div class="square" data-index="5"></div>
+      <div class="square" data-index="6"></div>
+      <div class="square" data-index="7"></div>
+      <div class="square" data-index="8"></div>
+    </div>
+    <div class="message">Player 1 = X, Player 2 = O</div>
+    <div class="info-display">
+      <button id="start-game">Start</button>
+      <button id="restart-game" style="display: none;">Restart</button>
+    </div>
   </div>
   <script src="script.js"></script>
 </body>
